@@ -5,40 +5,22 @@ use("Agg")
 from scipy.signal import savgol_filter
 
 from PySide6.QtGui import QAction, QKeySequence
-from PySide6.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QMenuBar
+from PySide6.QtWidgets import QFileDialog, QDockWidget, QVBoxLayout, QMenuBar
 from PySide6.QtCore import QStandardPaths, Qt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from matplotlib.patches import FancyArrowPatch
 
 
-class PlotWindow(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName("Plot")
-        self.resize(640, 480)
-        self.plot = MplPlot(self)
+class PlotWindow(QDockWidget):
+    def __init__(self, name, parent=None):
+        super().__init__(name, parent)
+        self.plot = MplPlot(self, width=4, height=5)
 
         self.save_act = QAction("Save")
         self.save_act.triggered.connect(self.plot.save)
         self.save_act.setShortcut(QKeySequence.Save)
-
-        self.close_act = QAction("Close")
-        self.close_act.triggered.connect(self.close)
-        self.close_act.setShortcuts([QKeySequence.Quit, QKeySequence.Cancel])
-
-        self.menu_bar = QMenuBar()
-        file_menu = self.menu_bar.addMenu("File")
-        file_menu.addAction(self.save_act)
-        file_menu.addSeparator()
-        file_menu.addAction(self.close_act)
-
-        plot_layout = QVBoxLayout()
-        plot_layout.setContentsMargins(0,0,0,0)
-        plot_layout.setAlignment(Qt.AlignTop)
-        plot_layout.addWidget(self.menu_bar,0)
-        plot_layout.addWidget(self.plot)
-        self.setLayout(plot_layout)
+        self.setWidget(self.plot)
 
 
 class MplPlot(FigureCanvasQTAgg):

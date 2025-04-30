@@ -86,8 +86,17 @@ class ParameterWindow(QDockWidget):
 
         self.update_stokes()
         
-
-
+    def clip_phase_x(self, value):
+        if np.abs(value>=180):
+            self.phase_x.blockSignals(True)
+            self.phase_x.setValue(((value + 180) % 360) - 180)
+            self.phase_x.blockSignals(False)
+    
+    def clip_phase_y(self, value):
+        if np.abs(value>=180):
+            self.phase_y.blockSignals(True)
+            self.phase_y.setValue(((value + 180) % 360) - 180)
+            self.phase_y.blockSignals(False)
 
     def __init__(self, name, parent=None):
         super().__init__(name, parent)
@@ -105,8 +114,10 @@ class ParameterWindow(QDockWidget):
         self.Ex.setValue(self.jones[0])
         self.Ey = QDoubleSpinBox(minimum=-1, maximum=1, singleStep=0.1)
         self.Ey.setValue(self.jones[1])
-        self.phase_x = QSpinBox(minimum=-180, maximum=360, value=0, singleStep=10, suffix="°")
-        self.phase_y = QSpinBox(minimum=-180, maximum=360, value=0, singleStep=10, suffix="°")
+        self.phase_x = QSpinBox(minimum=-360, maximum=360, value=0, singleStep=10, suffix="°")
+        self.phase_x.valueChanged.connect(self.clip_phase_x)
+        self.phase_y = QSpinBox(minimum=-360, maximum=360, value=0, singleStep=10, suffix="°")
+        self.phase_y.valueChanged.connect(self.clip_phase_y)
         for param in [self.Ex, self.Ey, self.phase_x, self.phase_y]:
             param.valueChanged.connect(self.update_jones_from_jones)
 

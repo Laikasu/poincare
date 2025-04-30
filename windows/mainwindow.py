@@ -16,17 +16,14 @@ class MainWindow(QMainWindow):
 
         self.display = MplCanvas(self)
 
-
-        
-
-        self.plot_window = PlotWindow()
-        self.plot_window.hide()
-        
+        self.plot_window = PlotWindow("xy polarization",self)
         self.parameter_window = ParameterWindow("Parameters", self)
         self.parameter_window.stokes_changed.connect(self.display.update_poincare)
         self.parameter_window.jones_changed.connect(self.plot_window.plot.plot)
         
+        self.addDockWidget(Qt.RightDockWidgetArea, self.plot_window)
         self.addDockWidget(Qt.RightDockWidgetArea, self.parameter_window)
+        
         
 
         self.createUI()
