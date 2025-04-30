@@ -1,18 +1,15 @@
 import numpy as np
-import matplotlib
-matplotlib.use("Agg")
-
-from typing import List
+from matplotlib import use
+use("Agg")
 
 from scipy.signal import savgol_filter
 
 from PySide6.QtGui import QAction, QKeySequence
 from PySide6.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QMenuBar
 from PySide6.QtCore import QStandardPaths, Qt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from matplotlib.patches import FancyArrowPatch
-import matplotlib.pyplot as plt
 
 
 class PlotWindow(QWidget):

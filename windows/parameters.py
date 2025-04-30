@@ -1,9 +1,7 @@
-from PySide6.QtWidgets import QWidget, QLabel, QFormLayout, QDoubleSpinBox, QCheckBox, QSpinBox, QGroupBox, QTabWidget, QHBoxLayout, QVBoxLayout, QComboBox, QPushButton, QGridLayout, QDockWidget
-from PySide6.QtCore import Signal, Qt, QFileInfo, QTimer
+from PySide6.QtWidgets import QWidget, QLabel, QFormLayout, QDoubleSpinBox, QSpinBox, QGroupBox, QTabWidget, QVBoxLayout, QGridLayout, QDockWidget
+from PySide6.QtCore import Signal
 
 import numpy as np
-
-from functools import partial
 
 # TO DO: Parameter overhaul
 

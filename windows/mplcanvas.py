@@ -1,14 +1,13 @@
 import numpy as np
-import matplotlib
-matplotlib.use("Agg")
+from matplotlib import use
+use("Agg")
 
 from PySide6.QtWidgets import QFileDialog
-from PySide6.QtCore import QStandardPaths, QFileInfo
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
+from PySide6.QtCore import QStandardPaths
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
 
-from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.patches import FancyArrowPatch
 from mpl_toolkits.mplot3d import proj3d
 
