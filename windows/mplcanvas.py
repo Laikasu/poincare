@@ -47,10 +47,10 @@ class MplCanvas(FigureCanvasQTAgg):
         x = np.outer(np.cos(u), np.sin(v))
         y = np.outer(np.sin(u), np.sin(v))
         z = np.outer(np.ones(np.size(u)), np.cos(v))
-        self.axes.plot_wireframe(x, y, z, color='gray', zorder=0)
+        self.axes.plot_wireframe(x, y, z, color='gray', alpha=0.7, zorder=0)
         
 
-        params = dict(mutation_scale=20, arrowstyle='-|>', color='k', lw=2, zorder=1)
+        params = dict(mutation_scale=20, arrowstyle='-|>', color='k', lw=2, alpha=0.9, zorder=1)
         self.axes.add_artist(Arrow3D([-1.5,1.5],[0,0],[0,0],**params))
         self.axes.text(1.5,0,0,'S1')
         self.axes.add_artist(Arrow3D([0,0],[-1.5,1.5],[0,0],**params))
@@ -62,8 +62,10 @@ class MplCanvas(FigureCanvasQTAgg):
         #self.axes.set_xlabel('S1')
         #self.axes.set_ylabel('S2')
         #self.axes.set_zlabel('S3')
-        marker = 'o' if len(stokes[0]) <= 8 else '.'
-        self.points = self.axes.plot(stokes[0], stokes[1], stokes[2], color='b', marker=marker, zorder=10)
+        self.line = self.axes.plot(*stokes, marker='.', color='k', zorder=5)
+        self.end = self.axes.plot(*stokes[:,-1], marker='o', color='r', zorder=10)
+        self.start = self.axes.plot(*stokes[:,0], marker='o',color='b', zorder=10)
+        
         
         self.figure.canvas.draw()
 

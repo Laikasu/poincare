@@ -9,7 +9,7 @@ class ParameterWindow(QDockWidget):
     """Window where you set the parameters."""
 
     stokes_changed = Signal(np.ndarray)
-    jones_changed = Signal(np.ndarray)
+    jones_changed = Signal(np.ndarray, np.ndarray)
 
     def stokes_from_jones(self, jones):
         if jones[0] == 0:
@@ -46,6 +46,8 @@ class ParameterWindow(QDockWidget):
         for i in range(self.times.value()):
             s = self.jones_matrix(s)
             self.stokes.append(self.stokes_from_jones(s))
+        
+        self.jones_changed.emit(self.jones/np.linalg.norm(self.jones), s/np.linalg.norm(s))
         self.stokes = np.array(self.stokes).T
         self.stokes_changed.emit(self.stokes)
         
@@ -54,7 +56,7 @@ class ParameterWindow(QDockWidget):
         self.jones = np.array(
             [self.Ex.value()*np.exp(1j*np.radians(self.phase_x.value())),
               self.Ey.value()*np.exp(1j*np.radians(self.phase_y.value()))])
-        self.jones_changed.emit(self.jones)
+        
         # Update UI
         stokes = self.stokes_from_jones(self.jones)
         params = [self.S1, self.S2, self.S3]
@@ -71,7 +73,6 @@ class ParameterWindow(QDockWidget):
     def update_jones_from_stokes(self):
         stokes = np.array([self.S1.value(), self.S2.value(), self.S3.value()])
         self.jones = self.jones_from_stokes(stokes)
-        self.jones_changed.emit(self.jones)
 
         # Update UI without triggering recursive loop
         params = [self.Ex, self.Ey, self.phase_x, self.phase_y]
@@ -137,7 +138,7 @@ class ParameterWindow(QDockWidget):
         self.xyi = QDoubleSpinBox(minimum=-1, maximum=1, singleStep=0.1, value=0)
         self.yxi = QDoubleSpinBox(minimum=-1, maximum=1, singleStep=0.1, value=0)
         self.yyi = QDoubleSpinBox(minimum=-1, maximum=1, singleStep=0.1, value=0)
-        self.times = QSpinBox(minimum=0, maximum=200, value=1, singleStep=1)
+        self.times = QSpinBox(minimum=1, maximum=200, value=1, singleStep=1)
 
         for param in [self.xx, self.xy, self.yx, self.yy,self.xxi, self.xyi, self.yxi, self.yyi, self.times]:
             param.valueChanged.connect(self.update_stokes)
