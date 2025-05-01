@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QAction, QKeySequence, QIcon
+from PySide6.QtGui import QAction, QKeySequence
 from PySide6.QtWidgets import QMainWindow, QApplication
 import os
 
@@ -12,7 +12,6 @@ class MainWindow(QMainWindow):
     def __init__(self):
         application_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')
         QMainWindow.__init__(self)
-        self.setWindowIcon(QIcon(os.path.join(application_path, "images", "poincare.png")))
 
         self.display = MplCanvas(self)
 

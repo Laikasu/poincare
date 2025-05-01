@@ -1,7 +1,7 @@
-# Polarization Visualization
+# Poincaré
 
 ## Overview  
-**Polarization Visualization** is a tool designed for plotting Jones vectors and Stokes parameters on a Poincaré sphere. It allows for tracking 
+**Poincaré** is a tool designed for plotting Jones vectors and Stokes parameters on a Poincaré sphere. It allows for tracking polarization as it is transformed by Jones matrices.
 
 ## Features  
 - Plot Jones vectors and Stokes parameters on the Poincaré sphere
