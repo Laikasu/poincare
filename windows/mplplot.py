@@ -2,8 +2,6 @@ import numpy as np
 from matplotlib import use
 use("Agg")
 
-from scipy.signal import savgol_filter
-
 from PySide6.QtGui import QAction, QKeySequence
 from PySide6.QtWidgets import QFileDialog, QDockWidget, QVBoxLayout, QMenuBar
 from PySide6.QtCore import QStandardPaths, Qt
